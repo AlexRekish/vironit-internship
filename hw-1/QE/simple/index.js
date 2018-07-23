@@ -29,13 +29,13 @@
     alert(displayAnswers(answers));
     
     function getOneAnswer(a, b) {
-        return -b / (2 * a);
+        return (-b / (2 * a)).toFixed(2);
     }
 
     function getTwoAnswers(a, b, D) {
         return [
-            (-b + Math.sqrt(D)) / (2 * a),
-            (-b - Math.sqrt(D)) / (2 * a)
+            ((-b + Math.sqrt(D)) / (2 * a)).toFixed(2),
+            ((-b - Math.sqrt(D)) / (2 * a)).toFixed(2)
         ]
     }
 

@@ -31,7 +31,7 @@ function Employee (name, surname, salary) {
 
     this.changeSalary = function (percent) {
         var coeff = +percent || 0;
-        salary = coeff > 0 ? salary + (salary * Math.abs(coeff) / 100) : salary - (salary * Math.abs(coeff) / 100);
+        salary += salary * coeff / 100;
     }
 
 }    

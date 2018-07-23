@@ -27,12 +27,12 @@ function Employee(name, surname, salary) {
     }
 
     Employee.prototype.getSalary = function () {
-        return this._salary;
+        return this._salary.toFixed(2);
     }
 
     Employee.prototype.changeSalary = function (percent) {
         var coeff = +percent || 0;
-        this._salary = coeff > 0 ? this._salary + (this._salary * Math.abs(coeff) / 100) : this._salary - (this._salary * Math.abs(coeff) / 100);
+        this._salary += this._salary * coeff / 100;
     }
 
 
@@ -59,7 +59,7 @@ function changeSalaryForEverybody(percent = 0, employees) {
 }
 
 printEmployees(employees);
-changeSalaryForEverybody(23, employees);
+changeSalaryForEverybody(-23, employees);
 console.log(` 
 `);
 printEmployees(employees);
