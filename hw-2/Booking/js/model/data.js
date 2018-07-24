@@ -1,16 +1,17 @@
 export const RoomStatus = {
   FREE: `Свободен`,
-  BUSY: `Занят`
+  BUSY: `Занят`,
+  PENDING: `Бронируется`
 };
 
 const RoomType = {
-  LUX: `lux`,
-  STANDART: `standart`
+  LUX: `Люкс`,
+  STANDARD: `Стандарт`
 };
 
 const RoomCost = {
   LUX: 3000,
-  STANDART: 1500
+  STANDARD: 1500
 };
 
 let today = new Date();
@@ -27,7 +28,7 @@ export const Day = {
   SECOND: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).toLocaleString(`ru`, dateOptions),
   THIRD: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2).toLocaleString(`ru`, dateOptions),
   FOURTH: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3).toLocaleString(`ru`, dateOptions),
-  FIVETH: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 4).toLocaleString(`ru`, dateOptions),
+  FIFTH: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 4).toLocaleString(`ru`, dateOptions),
   SIXTH: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5).toLocaleString(`ru`, dateOptions),
   SEVENTH: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6).toLocaleString(`ru`, dateOptions),
 };
@@ -64,8 +65,8 @@ export const state = {
     },
     {
       number: 3,
-      type: RoomType.STANDART,
-      cost: RoomCost.STANDART,
+      type: RoomType.STANDARD,
+      cost: RoomCost.STANDARD,
       dates: [
         RoomStatus.FREE,
         RoomStatus.FREE,
@@ -77,8 +78,8 @@ export const state = {
       ],
     }, {
       number: 4,
-      type: RoomType.STANDART,
-      cost: RoomCost.STANDART,
+      type: RoomType.STANDARD,
+      cost: RoomCost.STANDARD,
       dates: [
         RoomStatus.FREE,
         RoomStatus.FREE,
@@ -90,8 +91,8 @@ export const state = {
       ],
     }, {
       number: 5,
-      type: RoomType.STANDART,
-      cost: RoomCost.STANDART,
+      type: RoomType.STANDARD,
+      cost: RoomCost.STANDARD,
       dates: [
         RoomStatus.FREE,
         RoomStatus.FREE,

@@ -15,21 +15,20 @@ const cleancss = require('gulp-clean-css');
 const notify = require('gulp-notify');
 
 gulp.task('style', function () {
-    return gulp.src('sass/**/*.sass')
-        .pipe(plumber())
-        .pipe(sass({ outputStyle: 'expanded' }).on('error', notify.onError()))
-        .pipe(autoprefixer( {
-            rowsers: ['last 2 versions'],
-            cascade: true
-        }))
+    return gulp.src('sass/**/main.sass')
+      .pipe(sass({ outputStyle: 'expanded' }).on('error', notify.onError()))
+      .pipe(autoprefixer( {
+        browsers: ['last 2 versions'],
+        cascade: true
+      }))
 	    .pipe(gulp.dest('build/css'))
 	    .pipe(rename({ suffix: '.min', prefix : '' }))
 	    .pipe(cleancss( {
 			level: { 1: { specialComments: 0 } },
 			compatibility: 'ie11'
-		})) // Opt., comment out when debugging
-        .pipe(gulp.dest('build/css'))
-        .pipe(server.stream());
+		  })) // Opt., comment out when debugging
+      .pipe(gulp.dest('build/css'))
+      .pipe(server.stream());
 });
 
 gulp.task('scripts', function () {
@@ -47,7 +46,8 @@ gulp.task('scripts', function () {
                         presets: ['env']
                     }
                 }]
-            }
+            },
+            mode: 'development'
         }))
         // .pipe(uglify())
         .pipe(plumber())
