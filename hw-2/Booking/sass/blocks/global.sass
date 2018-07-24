@@ -1,0 +1,45 @@
+@import "../_vars"
+
+*, ::after, ::before
+	box-sizing: border-box
+
+body
+	padding: 0
+	border: none
+	font-size: 16px
+	min-width: 320px
+	line-height: 1.4
+	font-family: $font
+	overflow-x: hidden
+	color: #fff
+	background-color: $dark
+
+h1, h2, h3, h4, h5, h6
+	font-family: $header
+	font-weight: 700
+
+picture
+	border: 0
+	margin: 0
+	padding: 0
+
+// *
+// 	outline: 1px solid red
+
+.visually-hidden
+	position: absolute
+	width: 1px
+	height: 1px
+	margin: -1px
+	border: 0
+	padding: 0
+	white-space: nowrap
+	clip-path: inset(100%)
+	clip: rect(0 0 0 0)
+	overflow: hidden
+
+main
+  max-height: 80vh
+  height: 80vh
+  display: flex
+  justify-content: center
