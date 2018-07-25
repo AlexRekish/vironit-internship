@@ -10,7 +10,7 @@ function Employee (name, surname, salary) {
     }
 
     this.setName = function (newName) {
-        if (typeof(newName) === `string`) name = newName || name;
+        name = typeof(newName) === `string` ? newName : name;
     }
 
     this.getSurname = function () {
@@ -18,23 +18,27 @@ function Employee (name, surname, salary) {
     }
 
     this.setSurname = function (newSurname) {
-        if (typeof (newSurname) === `string`) surname = newSurname || surname;
-    }
-
-    this.getFullName = function () {
-        return `${name} ${surname}`;
+        surname = typeof(newSurname) === `string` ? newSurname : surname;
     }
 
     this.getSalary = function () {
         return salary;
     }
 
-    this.changeSalary = function (percent) {
-        var coeff = +percent || 0;
-        salary += salary * coeff / 100;
+    this.setSalary = function (newSalary) {
+        const nSalary = +newSalary || salary
+        salary = nSalary > 0 ? nSalary : salary;
     }
-
 }    
+
+Employee.prototype.getFullName = function () {
+    return `${this.getName()} ${this.getSurname()}`;
+}
+
+Employee.prototype.changeSalary = function (percent) {
+    var coeff = +percent || 0;
+    this.setSalary(this.getSalary() * coeff / 100);
+}
 
 var employees = [
     new Employee('Дэн', 'Абрамов', 5000),

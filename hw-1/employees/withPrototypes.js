@@ -11,7 +11,7 @@ function Employee(name, surname, salary) {
     }
 
     Employee.prototype.setName = function (newName) {
-        if (typeof (newName) === `string`) this._name = newName || this._name;
+       this._name = typeof (newName) === `string` ? newName : this._name;
     }
 
     Employee.prototype.getSurname = function () {
@@ -19,7 +19,7 @@ function Employee(name, surname, salary) {
     }
 
     Employee.prototype.setSurname = function (newSurname) {
-        if (typeof (newSurname) === `string`) this._surname = newSurname || this._surname;
+        this._surname = typeof (newSurname) === `string` ? newSurname : this._surname;
     }
 
     Employee.prototype.getFullName = function () {
@@ -28,6 +28,11 @@ function Employee(name, surname, salary) {
 
     Employee.prototype.getSalary = function () {
         return this._salary.toFixed(2);
+    }
+
+    Employee.prototype.setSalary = function (newSalary) {
+        const nSalary = +newSalary || this._salary
+        this._salary = nSalary > 0 ? nSalary : this._salary;
     }
 
     Employee.prototype.changeSalary = function (percent) {
