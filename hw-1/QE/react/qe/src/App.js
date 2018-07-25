@@ -23,22 +23,15 @@ class App extends Component {
   }
 
   variableChangeHandler = (evt) => {
-    this.setState({
-      variables: [
-        {
-          name: `A`,
-          value: +evt.target.value || 1 
-        },
-        {
-          name: `B`,
-          value: +evt.target.value
-        },
-        {
-          name: `C`,
-          value: +evt.target.value
-        }
-      ]
-    }, this.refreshResult);
+    const [...newState] = this.state.variables;
+    newState.forEach((val, i) => {
+      if (val.name === evt.target.name) {
+        if (val.name === `A`) {
+          newState[i].value = +evt.target.value || 1
+        } else newState[i].value = +evt.target.value;
+      }
+    }) 
+    this.setState({variables: newState}, this.refreshResult);
   }  
   
   refreshResult() {

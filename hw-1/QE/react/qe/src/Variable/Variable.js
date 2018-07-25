@@ -15,7 +15,7 @@ const variable = (props) => {
     return (
         <div>
             <label  style={style}>Введите значение коэффициента {props.valueName}
-                <input type="number" className="variable" onChange= {props.changed} value={props.value} style={inputStyle}/>
+                <input type="number" className="variable" onChange= {props.changed} value={props.value} style={inputStyle} name={props.name}/>
             </label>
             <p>Коэффициент {props.valueName} : {props.value}</p>
         </div>   
