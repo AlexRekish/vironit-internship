@@ -11,9 +11,12 @@ export default class AbstractPresenter {
     //
   }
 
-  switchScreens(template) {
+  switchScreens(template, form) {
     this.main.innerHTML = ``;
     this.main.appendChild(template);
+    if (form) {
+      this.main.appendChild(form);
+    }
   }
 
   init() {

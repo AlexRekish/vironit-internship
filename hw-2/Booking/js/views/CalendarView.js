@@ -4,16 +4,11 @@ import * as data from '../model/data';
 export default class CalendarView extends AbstractView {
   get template() {
     return `
+      <h1 class="booking__title">Бронирование номера в отеле</h1>
       <table class="calendar">
         <tr class="calendar__room">
           <th class="calendar__day"> </th>
-          <th class="calendar__day">${data.Day.FIRST}</th>
-          <th class="calendar__day">${data.Day.SECOND}</th>
-          <th class="calendar__day">${data.Day.THIRD}</th>
-          <th class="calendar__day">${data.Day.FOURTH}</th>
-          <th class="calendar__day">${data.Day.FIFTH}</th>
-          <th class="calendar__day">${data.Day.SIXTH}</th>
-          <th class="calendar__day">${data.Day.SEVENTH}</th>
+          ${(new Array(data.WEEK).fill().map((val, i) => `<th class="calendar__day">${data.getDate(i)}</th>`.trim()).join(``))}
         </tr>
         ${data.state.rooms.map((room, i) => `
           <tr class="room">

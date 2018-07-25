@@ -3,6 +3,11 @@
 *, ::after, ::before
 	box-sizing: border-box
 
+html
+  background: url(../img/325975-svetik.jpg)
+  background-position: center
+  background-attachment: fixed
+
 body
 	padding: 0
 	border: none
@@ -12,7 +17,9 @@ body
 	font-family: $font
 	overflow-x: hidden
 	color: #fff
-	background-color: $dark
+	background-color: transparent
+
+
 
 h1, h2, h3, h4, h5, h6, legend
 	font-family: $header
@@ -39,7 +46,10 @@ picture
 	overflow: hidden
 
 main
-  max-height: 80vh
-  height: 80vh
   display: flex
+  flex-direction: column
   justify-content: center
+  align-items: center
+  margin: 0 auto
+  width: 100%
+
