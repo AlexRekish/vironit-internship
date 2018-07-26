@@ -5,47 +5,34 @@ import Variable from './Variable/Variable';
 
 class App extends Component {
   state = {
-    firstVariable: {
-      name: `A`,
-      value: 1
-    },
-    secondVariable: {
-      name: `B`,
-      value: 0
-    },
-    thirdVariable: {
-      name: `C`,
-      value: 0
-    },
+    variables: [
+      {
+        name: `A`,
+        value: 1
+      },
+      {
+        name: `B`,
+        value: 0
+      },
+      {
+        name: `C`,
+        value: 0
+      }
+    ],
     answers: ``
   }
 
-  firstVariableChangeHandler = (evt) => {
-    this.setState({
-      firstVariable: {
-        name: `A`,
-        value: +evt.target.value || 1 
+  variableChangeHandler = (evt) => {
+    const [...newState] = this.state.variables;
+    newState.forEach((val, i) => {
+      if (val.name === evt.target.name) {
+        if (val.name === `A`) {
+          newState[i].value = +evt.target.value || 1
+        } else newState[i].value = +evt.target.value;
       }
-    }, this.refreshResult);
+    }) 
+    this.setState({variables: newState}, this.refreshResult);
   }  
-
-  secondVariableChangeHandler = (evt) => {
-    this.setState({
-      secondVariable: {
-        name: `B`,
-        value: +evt.target.value
-      }
-    }, this.refreshResult);
-  }
-
-  thirdVariableChangeHandler = (evt) => {
-    this.setState({
-      thirdVariable: {
-        name: `C`,
-        value: +evt.target.value
-      }
-    }, this.refreshResult);
-  }
   
   refreshResult() {
     let result = this.calculateQuadraticEquation();
@@ -55,18 +42,18 @@ class App extends Component {
   }
 
   calculateQuadraticEquation() {
+    const [firstVariable, secondVariable, thirdVariable] = this.state.variables;
     const answers = [];
-    let discriminant = Math.pow(this.state.secondVariable.value, 2) - 4 * this.state.firstVariable.value * this.state.thirdVariable.value;
+    let discriminant = Math.pow(secondVariable.value, 2) - 4 * firstVariable.value * thirdVariable.value;
     if (discriminant < 0) {
-      // alert('Нет действительных решений, вычисляем комплексные. В комплексных решениях используется i - мнимая единица. Мнимая единица - это комплексное число, квадрат которого равен -1.');
       let sqrtD = `${Math.sqrt(Math.abs(discriminant)).toFixed(2)} * i`;
-      let firstAnswer = `(${-this.state.secondVariable.value} + ${sqrtD}) / ${2 * this.state.firstVariable.value}`;
-      let secondAnswer = `(${-this.state.secondVariable.value} - ${sqrtD}) / ${2 * this.state.firstVariable.value}`;
+      let firstAnswer = `(${-secondVariable.value} + ${sqrtD}) / ${2 * firstVariable.value}`;
+      let secondAnswer = `(${-secondVariable.value} - ${sqrtD}) / ${2 * firstVariable.value}`;
       answers.push(firstAnswer, secondAnswer);
     } else {
       discriminant === 0 
-      ? answers.push(this.getOneAnswer(this.state.firstVariable.value, this.state.secondVariable.value)) 
-      : answers.push(...this.getTwoAnswers(this.state.firstVariable.value, this.state.secondVariable.value, discriminant));
+      ? answers.push(this.getOneAnswer(firstVariable.value, secondVariable.value)) 
+      : answers.push(...this.getTwoAnswers(firstVariable.value, secondVariable.value, discriminant));
     }
 
     return this.displayAnswers(answers);
@@ -104,21 +91,16 @@ class App extends Component {
           <h2>Решение квадратных уравнений</h2>
           <p className="App-description">Квадратное уравнение - это уравнение вида a * x^2 + b * x + c = 0, где коэффициенты a, b и c - любые действительные числа, причем a !== 0. <br/>Для получения корней просто введите коэффициенты a, b и с в поля ниже.</p>
           <fieldset className="App-inputs">
-            <Variable 
-              changed={this.firstVariableChangeHandler}
-              value={this.state.firstVariable.value}
-              valueName={this.state.firstVariable.name}
-            />
-            <Variable
-              changed={this.secondVariableChangeHandler}
-              value={this.state.secondVariable.value}
-              valueName={this.state.secondVariable.name}
-            />
-            <Variable
-              changed={this.thirdVariableChangeHandler}
-              value={this.state.thirdVariable.value}
-              valueName={this.state.thirdVariable.name}
-            />
+            {
+              this.state.variables.map((val, i) => (
+                <Variable 
+                  changed={this.variableChangeHandler}
+                  value={val.value}
+                  name={val.name}
+                  key={i}
+                />
+              ))
+            }
           </fieldset>
           <pre className="App-answer">{this.state.answers}</pre>  
         </section>  
