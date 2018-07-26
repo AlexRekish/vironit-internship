@@ -1,5 +1,5 @@
 import AbstractView from './AbstractView';
-import * as data from '../model/data';
+import {state, RoomStatus, WEEK, getDate} from '../model/data';
 
 export default class CalendarView extends AbstractView {
   get template() {
@@ -8,21 +8,23 @@ export default class CalendarView extends AbstractView {
       <table class="calendar">
         <tr class="calendar__room">
           <th class="calendar__day"> </th>
-          ${(new Array(data.WEEK).fill().map((val, i) => `<th class="calendar__day">${data.getDate(i)}</th>`.trim()).join(``))}
+          ${(new Array(WEEK).fill().map((val, i) => `<th class="calendar__day">${getDate(i)}</th>`.trim()).join(``))}
         </tr>
-        ${data.state.rooms.map((room, i) => `
+        ${state.rooms.map((room, i) => `
           <tr class="room">
-            <th class="room__number">Номер №${i + 1} <br/>Тип номера: ${room.type} <br/> Цена за сутки: ${room.cost}</th>
+            <th class="room__number">Номер №${i + 1} <br/>
+            Тип номера: ${room.type} <br/>
+            Цена за сутки: ${room.cost}</th>
             ${room.dates.map((status) => {
     let roomStatus;
     switch (status) {
-      case data.RoomStatus.FREE:
+      case RoomStatus.FREE:
         roomStatus = `free`;
         break;
-      case data.RoomStatus.BUSY:
+      case RoomStatus.BUSY:
         roomStatus = `busy`;
         break;
-      case data.RoomStatus.PENDING:
+      case RoomStatus.PENDING:
         roomStatus = `pending`;
         break;
     }

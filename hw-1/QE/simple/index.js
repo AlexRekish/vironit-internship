@@ -11,7 +11,7 @@
 
     const answers = [];
     
-    if (!firstCoefficient || isNaN(firstCoefficient)) {
+    while (!firstCoefficient || isNaN(firstCoefficient)) {
         alert('A не может быть пустым!');
         firstCoefficient = +prompt(`Введите А`);
     }

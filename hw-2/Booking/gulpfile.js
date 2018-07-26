@@ -124,6 +124,7 @@ gulp.task('test', function () {
         })
         .pipe(mocha({
             compilers: ['js:babel-register'], // Включим поддержку "import/export" в Mocha тестах
-            reporter: 'nyan'
+            reporter: 'nyan',
+            require: ['mock-local-storage'],
         }));
 });

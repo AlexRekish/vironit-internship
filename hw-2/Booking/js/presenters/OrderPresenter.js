@@ -1,6 +1,6 @@
 import OrderView from '../views/OrderView';
 import AbstractPresenter from './AbstractPresenter';
-import * as data from '../model/data';
+import {state, RoomStatus, reservedNumbers, nowDate} from '../model/data';
 import calendarPresenter from './CalendarPresenter';
 
 class OrderPresenter extends AbstractPresenter {
@@ -9,18 +9,50 @@ class OrderPresenter extends AbstractPresenter {
   }
   listener() {
     this.view.onOrder = () => {
-      const room = data.state.rooms.findIndex((val) => val.isPending);
-      data.state.rooms[room].dates.forEach((val, i) => {
-        if (val === data.RoomStatus.PENDING) {
-          data.state.rooms[room].dates[i] = data.RoomStatus.BUSY;
-        }
-      });
-      data.state.rooms[room].isPending = ``;
-      data.state.inPending.status = ``;
-      data.state.inPending.roomNumber = ``;
-      localStorage.setItem(`state`, JSON.stringify(data.state));
-      calendarPresenter.init();
+      if (state.inPending.status) {
+        this.order();
+      } else if (state.inCancel.status && state.inCancel.reservedNumber) {
+        this.cancel();
+      }
     };
+  }
+  order() {
+    const room = state.inPending.roomNumber;
+    const reserved = {
+      roomNumber: state.inPending.roomNumber,
+      numbersOfDateCell: [],
+      date: +nowDate,
+    };
+    state.rooms[room].dates.forEach((val, i) => {
+      if (val === RoomStatus.PENDING) {
+        state.rooms[room].dates[i] = RoomStatus.BUSY;
+        reserved.numbersOfDateCell.push(i);
+      }
+    });
+    reservedNumbers.push(reserved);
+    state.rooms[room].isPending = ``;
+    state.inPending.status = ``;
+    state.inPending.roomNumber = ``;
+    this.updateViews();
+  }
+
+  cancel() {
+    const reserved = state.inCancel.reservedNumber;
+    const roomNumber = state.inCancel.roomNumber;
+    reservedNumbers[reserved].numbersOfDateCell
+      .forEach((val) => {
+        state.rooms[roomNumber].dates[val] = RoomStatus.FREE;
+      });
+    reservedNumbers.splice(reserved, 1);
+    state.inCancel.status = ``;
+    state.inCancel.roomNumber = ``;
+    this.updateViews();
+  }
+
+  updateViews() {
+    localStorage.setItem(`state`, JSON.stringify(state));
+    localStorage.setItem(`reserved`, JSON.stringify(reservedNumbers));
+    calendarPresenter.init();
   }
 }
 
