@@ -8,7 +8,8 @@ export default class CalendarView extends AbstractView {
       <table class="calendar">
         <tr class="calendar__room">
           <th class="calendar__day"> </th>
-          ${(new Array(WEEK).fill().map((val, i) => `<th class="calendar__day">${getDate(i)}</th>`.trim()).join(``))}
+          ${(new Array(WEEK).fill().map((val, i) => `
+          <th class="calendar__day">${getDate(i)}</th>`.trim()).join(``))}
         </tr>
         ${state.rooms.map((room, i) => `
           <tr class="room">

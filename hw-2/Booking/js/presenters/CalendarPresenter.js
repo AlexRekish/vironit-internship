@@ -59,7 +59,7 @@ class CalendarPresenter extends AbstractPresenter {
       this.onReserveRoom();
     } else if (state.rooms[roomNumber].dates[selectedDate - 1] === RoomStatus.FREE
       && state.rooms[roomNumber].isPending) {
-      /* Если уже бронируется, то проверяем дату только для этой комнаты. Если комната свободна, то добавляем к брони*/
+      // Если уже бронируется, то проверяем дату только для этой комнаты. Если комната свободна, то добавляем к брони
       clearCancelStatus();
       state.rooms[roomNumber].dates[selectedDate - 1] = RoomStatus.PENDING;
       this.onReserveRoom();

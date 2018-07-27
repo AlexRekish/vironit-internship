@@ -26,7 +26,7 @@ class OrderPresenter extends AbstractPresenter {
     state.rooms[room].dates.forEach((val, i) => {
       if (val === RoomStatus.PENDING) {
         state.rooms[room].dates[i] = RoomStatus.BUSY;
-        reserved.numbersOfDateCell.push(i);
+        reserved.numbersOfDateCell.push(i + 1);
       }
     });
     reservedNumbers.push(reserved);

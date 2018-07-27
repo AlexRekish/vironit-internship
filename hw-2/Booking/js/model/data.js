@@ -134,23 +134,26 @@ export const getFinalCost = (days, cost) => {
 };
 
 export const updateCells = (orders) => {
+  const updatedDates = new Array(7).fill(RoomStatus.FREE);
+  const updatedCells = [];
   orders.forEach((val, roomIndex) => {
-    if (val.date !== +nowDate) {
-      const days = +nowDate - +val.date;
-      val.numbersOfDateCell.forEach((cell, i) => {
-        const shift = cell - days / (1000 * 3600 * 24);
-        if (shift >= 1) {
-          if (state.rooms[val.roomNumber]) {
-            state.rooms[val.roomNumber].dates[cell] = RoomStatus.FREE;
-            state.rooms[val.roomNumber].dates[shift] = RoomStatus.BUSY;
+    if (val.roomNumber) {
+      if (val.date !== +nowDate) {
+        const days = +nowDate - +val.date;
+        const dayInMilliseconds = 1000 * 3600 * 24;
+        val.numbersOfDateCell.forEach((cell) => { // cell - номер ячейки занятого номера
+          const shift = cell - days / dayInMilliseconds; // shift - номер ячейки с учетом сдвига
+          if (shift >= 1) {
+            if (state.rooms[val.roomNumber]) {
+              updatedDates[cell - 1] = RoomStatus.FREE;
+              updatedDates[shift - 1] = RoomStatus.BUSY;
+              updatedCells.push(shift);
+            }
           }
-          orders[roomIndex].numbersOfDateCell[i] = cell - days;
-        } else {
-          state.rooms[val.roomNumber].dates.splice(0, Math.abs(shift));
-          state.rooms[val.roomNumber].dates.push(...(new Array(Math.abs(shift)).fill(RoomStatus.FREE)));
-          orders[roomIndex].numbersOfDateCell.splice(i, 1);
-        }
-      });
+        });
+        orders[roomIndex].numbersOfDateCell = [...updatedCells];
+        state.rooms[val.roomNumber].dates = [...updatedDates];
+      }
     }
   });
 };
