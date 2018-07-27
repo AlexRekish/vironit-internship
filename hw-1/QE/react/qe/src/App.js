@@ -35,7 +35,7 @@ class App extends Component {
   }  
   
   refreshResult() {
-    let result = this.calculateQuadraticEquation();
+    let result = this.displayAnswers(this.calculateQuadraticEquation());
     this.setState({
       answers: result
     })
@@ -46,18 +46,21 @@ class App extends Component {
     const answers = [];
     let discriminant = Math.pow(secondVariable.value, 2) - 4 * firstVariable.value * thirdVariable.value;
     if (discriminant < 0) {
-      let sqrtD = `${Math.sqrt(Math.abs(discriminant)).toFixed(2)} * i`;
-      let firstAnswer = `(${-secondVariable.value} + ${sqrtD}) / ${2 * firstVariable.value}`;
-      let secondAnswer = `(${-secondVariable.value} - ${sqrtD}) / ${2 * firstVariable.value}`;
-      answers.push(firstAnswer, secondAnswer);
+      answers.push(...this.getComplexAnswers(firstVariable.value, secondVariable.value, discriminant));
     } else {
       discriminant === 0 
       ? answers.push(this.getOneAnswer(firstVariable.value, secondVariable.value)) 
       : answers.push(...this.getTwoAnswers(firstVariable.value, secondVariable.value, discriminant));
     }
-
-    return this.displayAnswers(answers);
+    return answers;
   }  
+
+  getComplexAnswers(a, b, D) {
+    let sqrtD = `${Math.sqrt(Math.abs(D)).toFixed(2)} * i`;
+    let firstAnswer = `(${-b} + ${sqrtD}) / ${2 * a}`;
+    let secondAnswer = `(${-b} - ${sqrtD}) / ${2 * a}`;
+    return [firstAnswer, secondAnswer];
+  }
 
   getOneAnswer(a, b) {
     return (-b / (2 * a)).toFixed(2);
@@ -89,7 +92,9 @@ class App extends Component {
         </header>
         <section>
           <h2>Решение квадратных уравнений</h2>
-          <p className="App-description">Квадратное уравнение - это уравнение вида a * x^2 + b * x + c = 0, где коэффициенты a, b и c - любые действительные числа, причем a !== 0. <br/>Для получения корней просто введите коэффициенты a, b и с в поля ниже.</p>
+          <p className="App-description">Квадратное уравнение - это уравнение вида a * x^2 + b * x + c = 0, 
+          где коэффициенты a, b и c - любые действительные числа, причем a !== 0. 
+          <br/>Для получения корней просто введите коэффициенты a, b и с в поля ниже.</p>
           <fieldset className="App-inputs">
             {
               this.state.variables.map((val, i) => (
@@ -97,7 +102,7 @@ class App extends Component {
                   changed={this.variableChangeHandler}
                   value={val.value}
                   name={val.name}
-                  key={i}
+                  key={val.name}
                 />
               ))
             }
