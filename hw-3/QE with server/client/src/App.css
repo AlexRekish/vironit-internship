@@ -22,6 +22,14 @@
   font-size: large;
 }
 
+.App-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .App-description {
   font-size: 20px;
   font-weight: bold;
@@ -31,12 +39,33 @@
 .App-inputs {
   display: flex;
   justify-content: center;
+  border: none;
+  flex-direction: row;
+  width: 100vw;
+  flex-wrap: wrap;
 }
 
 .App-answer {
   font-family: inherit;
   font-weight: bold;
   font-size: 20px;
+}
+
+.App-btn {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 2px solid #222;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+}
+
+.App-btn:hover {
+  background-color: lightskyblue;
+  color:black;
 }
 
 @keyframes App-logo-spin {

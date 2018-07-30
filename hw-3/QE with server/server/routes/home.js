@@ -14,13 +14,6 @@ const validateCoeffs = (coeffs) => {
   return Joi.validate(coeffs, schema);
 };
 
-
-// router.options(`/`, (req, res) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.end();
-// })
-
 router.get(`/`, (req, res) => {
   const coeffs = {
     a: req.query.a,
@@ -30,7 +23,7 @@ router.get(`/`, (req, res) => {
   const {error} = validateCoeffs(coeffs);
   if (error) return res.status(400).send(error.details[0].message);
   const {a, b, c} = coeffs;
-  emitter.on('answerReady', (result) => {
+  emitter.once('answerReady', (result) => {
     return res.send(result);
   });
   module.exports.emitter = emitter;

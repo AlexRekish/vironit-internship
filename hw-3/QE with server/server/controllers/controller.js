@@ -36,7 +36,7 @@ function getTwoAnswers(a, b, D) {
 const getAnswer = (a, b, c) => {
   const emitter = require('../routes/home').emitter;
   const answer = new Promise((resolve, reject) => {
-    emitter.on('read', (data) => {
+    emitter.once('read', (data) => {
       resolve(JSON.parse(data));
     });
     module.exports.emitter = emitter;
@@ -67,7 +67,6 @@ const getAnswer = (a, b, c) => {
 };
 
 module.exports = {
-  qe: calculateQuadraticEquation,
   getAnswer,
   emitter
 }

@@ -47,15 +47,9 @@ class App extends Component {
   calculateButtonHandler = (evt) => {
     evt.preventDefault();
     const [a, b, c] = this.state.variables;
-    const coeffs = {
-      a: a.value,
-      b: b.value,
-      c: c.value,
-    };
-    return fetch(`http://localhost:3502?a=${coeffs.a}&b=${coeffs.b}&c=${coeffs.c}`)
+    return fetch(`http://localhost:3502?a=${a.value}&b=${b.value}&c=${c.value}`)
       .then((response) => {
         if (response.status === 200) {
-          console.log(response);
           return response.json();
         }
         throw new Error(`Server responded with error`);
@@ -63,7 +57,7 @@ class App extends Component {
       .then((data) => {
         this.refreshResult(data)
       })
-      // .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   refreshResult(data) {
@@ -78,10 +72,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Решение квадратных уравнений</h1>
         </header>
-        <section>
-          <h2>Решение квадратных уравнений</h2>
+        <section className="App-section"> 
           <p className="App-description">Квадратное уравнение - это уравнение вида a * x^2 + b * x + c = 0, 
           где коэффициенты a, b и c - любые действительные числа, причем a !== 0. 
           <br/>Для получения корней просто введите коэффициенты a, b и с в поля ниже.</p>
@@ -97,7 +90,9 @@ class App extends Component {
               ))
             }
           </fieldset>
-          <button type="button" onClick={this.calculateButtonHandler}>Рассчитать корни</button>
+          <button type="button" onClick={this.calculateButtonHandler} className="App-btn">
+            Рассчитать корни
+          </button>
           <pre className="App-answer">{this.state.answers}</pre>  
         </section>  
       </div>
