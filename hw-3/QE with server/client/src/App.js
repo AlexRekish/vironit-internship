@@ -38,10 +38,8 @@ class App extends Component {
     let count = arr.length;
     let answer = arr.map((val, i) => `x${i + 1} : ${val}`)
     return `
-      Количество решений: ${count}
-      ${answer.join(`
-      `)}
-    `
+      Количество решений: ${count}\n${answer.join(`\n`)}
+    `.trim();
   }
 
   calculateButtonHandler = (evt) => {

@@ -77,10 +77,8 @@ class App extends Component {
     let count = arr.length;
     let answer = arr.map((val, i) => `x${i + 1} : ${val}`)
     return `
-      Количество решений: ${count}
-      ${answer.join(`
-      `)}
-    `
+      Количество решений: ${count}\n${answer.join(`\n`)}
+    `.trim();
   }
 
   render() {
@@ -88,10 +86,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Решение квадратных уравнений</h1>
         </header>
         <section>
-          <h2>Решение квадратных уравнений</h2>
           <p className="App-description">Квадратное уравнение - это уравнение вида a * x^2 + b * x + c = 0, 
           где коэффициенты a, b и c - любые действительные числа, причем a !== 0. 
           <br/>Для получения корней просто введите коэффициенты a, b и с в поля ниже.</p>

@@ -10,14 +10,24 @@ const variable = (props) => {
         margin: `10px`
     };
     const inputStyle = {
-        marginTop: `10px`
+        marginTop: `10px`,
+        padding: `10px`,
+        borderRadius: `5px`,
+        fontWeight: `bold`,
+        fontSize: `18px`,
+        border: `2px solid lightskyblue`
+    }
+
+    const containerStyle = {
+        display: `block`,
+        flexShrink: `0`
     }
     return (
-        <div>
-            <label  style={style}>Введите значение коэффициента {props.valueName}
+        <div style={containerStyle}>
+            <label  style={style}>Введите значение коэффициента {props.name} :
                 <input type="number" className="variable" onChange= {props.changed} value={props.value} style={inputStyle} name={props.name}/>
             </label>
-            <p>Коэффициент {props.valueName} : {props.value}</p>
+            <p>Коэффициент {props.name} : {props.value}</p>
         </div>   
     );
 }
